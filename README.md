@@ -99,17 +99,6 @@ npm run web
 | `npm test`           | Corre los tests una vez       |
 | `npm run test:watch` | Tests en modo watch           |
 
-## Tests
-
-47 tests unitarios con `jest-expo` y `@testing-library/react-native`:
-
-| Archivo                                    | Qué cubre                                                                              |
-| ------------------------------------------ | -------------------------------------------------------------------------------------- |
-| `__tests__/lib/dates-test.ts`              | Cálculo de días restantes, etiquetas de vencimiento, cambio de mes/año, años bisiestos |
-| `__tests__/lib/money-test.ts`              | Formato de pesos y parseo del monto que escribe el usuario                             |
-| `__tests__/features/bills-reducer-test.ts` | Reducer de la lista y avance de fecha al pagar                                         |
-| `__tests__/components/BillCard-test.tsx`   | Render de la tarjeta y su estado _Pagado_                                              |
-
 ## Estructura
 
 ```
@@ -129,6 +118,8 @@ src/
 ## Intgrantes
 
 Luciano Agustin Cunningham Martinez
+
+---
 
 La lógica de negocio vive en `src/lib/` y `src/db/` como funciones puras,
 separada de las pantallas: por eso se puede testear sin montar componentes.
