@@ -1,55 +1,4 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
-import '@/global.css';
-
-import { Platform } from 'react-native';
-
-export const Colors = {
-  light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
-  },
-  dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
-  },
-} as const;
-
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
-
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
+export type ThemeMode = 'light' | 'dark';
 
 export const Spacing = {
   half: 2,
@@ -61,5 +10,82 @@ export const Spacing = {
   six: 64,
 } as const;
 
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
-export const MaxContentWidth = 800;
+export const Radii = {
+  chip: 999,
+  control: 12,
+  card: 16,
+  pill: 14,
+  circle: 999,
+} as const;
+
+export const Brand = {
+  primary: '#3B5BDB',
+  primaryMuted: '#B9C2E0',
+  surfaceLight: '#FFFFFF',
+  surfaceDark: '#161B2B',
+  danger: '#EF4444',
+  warning: '#F59E0B',
+  muted: '#8A93A6',
+  splash: '#3B5BDB',
+} as const;
+
+export const ToneColors = {
+  urgente: Brand.danger,
+  aviso: Brand.warning,
+  secundario: Brand.muted,
+  pagado: '#22C55E',
+} as const;
+
+export interface Palette {
+  bg: string;
+  surface: string;
+  border: string;
+  inputBg: string;
+  text: string;
+  textSecondary: string;
+  /** Fondo de chips/filtros inactivos: se apoya sobre `bg`. */
+  chipInactiva: string;
+  /** Fondo del botón destructive, con tinte rojo. */
+  dangerBg: string;
+  shadow: string;
+}
+
+export const PaletteLight: Palette = {
+  bg: '#F5F7FB',
+  surface: '#FFFFFF',
+  border: '#E4E8F2',
+  inputBg: '#F1F5FE',
+  text: '#0F172A',
+  textSecondary: '#5B647A',
+  chipInactiva: '#FFFFFF',
+  dangerBg: '#FEE2E2',
+  shadow: '#0B1220',
+};
+
+export const PaletteDark: Palette = {
+  bg: '#0B0F1D',
+  surface: '#161B2B',
+  border: '#262D42',
+  inputBg: '#0F1526',
+  text: '#F1F5FF',
+  textSecondary: '#9AA4C0',
+  chipInactiva: '#161B2B',
+  dangerBg: '#2A1B23',
+  shadow: '#0B1220',
+};
+
+export const Typography = {
+  title: { fontSize: 26, fontWeight: '800', lineHeight: 32 },
+  subtitle: { fontSize: 14, lineHeight: 20 },
+  sectionTitle: { fontSize: 16, fontWeight: '700' },
+  amount: { fontSize: 17, fontWeight: '700' },
+  body: { fontSize: 15, fontWeight: '600' },
+  bodyRegular: { fontSize: 15 },
+  label: { fontSize: 13, fontWeight: '600' },
+  caption: { fontSize: 12 },
+  overline: { fontSize: 11, fontWeight: '600', letterSpacing: 0.8 },
+} as const;
+
+export function getPalette(isDark: boolean): Palette {
+  return isDark ? PaletteDark : PaletteLight;
+}

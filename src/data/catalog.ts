@@ -1,0 +1,138 @@
+import type { CatalogItem, Categoria } from '@/types';
+
+export const CATEGORIAS: Categoria[] = ['Servicios', 'Vivienda', 'Entretenimiento'];
+
+export const SERVICE_CATALOG: CatalogItem[] = [
+  {
+    id: 'epec',
+    nombre: 'EPEC / Electricidad',
+    categoria: 'Servicios',
+    color: '#F59E0B',
+    icono: '⚡',
+    esSuscripcion: false,
+  },
+  {
+    id: 'agua',
+    nombre: 'Aguas Cordobesas',
+    categoria: 'Servicios',
+    color: '#0EA5E9',
+    icono: '💧',
+    esSuscripcion: false,
+  },
+  {
+    id: 'gas',
+    nombre: 'GAS / ECOGAS',
+    categoria: 'Servicios',
+    color: '#F97316',
+    icono: '🔥',
+    esSuscripcion: false,
+  },
+  {
+    id: 'fibertel',
+    nombre: 'Fibertel / Internet',
+    categoria: 'Servicios',
+    color: '#EF4444',
+    icono: '🌐',
+    esSuscripcion: false,
+  },
+  {
+    id: 'celular',
+    nombre: 'Telefonía celular',
+    categoria: 'Servicios',
+    color: '#06B6D4',
+    icono: '📱',
+    esSuscripcion: false,
+  },
+  {
+    id: 'cable',
+    nombre: 'TV cable',
+    categoria: 'Servicios',
+    color: '#64748B',
+    icono: '📺',
+    esSuscripcion: false,
+  },
+  {
+    id: 'alquiler',
+    nombre: 'Alquiler departamento',
+    categoria: 'Vivienda',
+    color: '#3B82F6',
+    icono: '🏠',
+    esSuscripcion: false,
+  },
+  {
+    id: 'expensas',
+    nombre: 'Expensas edificio',
+    categoria: 'Vivienda',
+    color: '#14B8A6',
+    icono: '🏢',
+    esSuscripcion: false,
+  },
+  {
+    id: 'seguro-hogar',
+    nombre: 'Seguro del hogar',
+    categoria: 'Vivienda',
+    color: '#6366F1',
+    icono: '🛡️',
+    esSuscripcion: false,
+  },
+  {
+    id: 'netflix',
+    nombre: 'Netflix',
+    categoria: 'Entretenimiento',
+    color: '#8B5CF6',
+    icono: '🎬',
+    esSuscripcion: true,
+  },
+  {
+    id: 'spotify',
+    nombre: 'Spotify',
+    categoria: 'Entretenimiento',
+    color: '#22C55E',
+    icono: '🎵',
+    esSuscripcion: true,
+  },
+  {
+    id: 'disney',
+    nombre: 'Disney+',
+    categoria: 'Entretenimiento',
+    color: '#2563EB',
+    icono: '✨',
+    esSuscripcion: true,
+  },
+  {
+    id: 'max',
+    nombre: 'Max (HBO)',
+    categoria: 'Entretenimiento',
+    color: '#7C3AED',
+    icono: '🎞️',
+    esSuscripcion: true,
+  },
+  {
+    id: 'youtube',
+    nombre: 'YouTube Premium',
+    categoria: 'Entretenimiento',
+    color: '#DC2626',
+    icono: '▶️',
+    esSuscripcion: true,
+  },
+  {
+    id: 'prime',
+    nombre: 'Amazon Prime Video',
+    categoria: 'Entretenimiento',
+    color: '#F59E0B',
+    icono: '📦',
+    esSuscripcion: true,
+  },
+  {
+    id: 'paramount',
+    nombre: 'Paramount+',
+    categoria: 'Entretenimiento',
+    color: '#FACC15',
+    icono: '🍿',
+    esSuscripcion: true,
+  },
+];
+
+export function findCatalogItem(id: string): CatalogItem | undefined {
+  return SERVICE_CATALOG.find((item) => item.id === id);
+}
