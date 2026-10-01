@@ -8,12 +8,6 @@ writing any code. Do not rely on memory or on older docs.
 If the `expo` dependency in `package.json` moves to another SDK, update that URL to
 match. Current pin: `expo ~57.0.26`, `react-native 0.86.3`, `expo-router ~57.0.24`.
 
-## NEVER run `npm run reset-project`
-
-It is leftover Expo template scaffolding. It **moves or deletes `src/` and
-`scripts/`**, which would wipe the entire app. Delete the script from
-`package.json` and `scripts/reset-project.js` if it ever gets run by accident.
-
 ## Stack
 
 Expo SDK 57 · Expo Router (file-based) · TypeScript · `expo-sqlite` for
