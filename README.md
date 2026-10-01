@@ -41,7 +41,7 @@ cae a un campo de texto porque el picker no tiene soporte web.
 Desde el detalle de una carga se puede registrar que ya se pagó.
 
 - Si es un **servicio puntual** (luz, alquiler), la carga queda marcada como
-  *Pagada*.
+  _Pagada_.
 - Si es una **suscripción** (Netflix, Spotify), la próxima fecha de pago avanza
   automáticamente un mes.
 
@@ -91,24 +91,24 @@ npm run web
 
 ## Scripts
 
-| Comando | Qué hace |
-| --- | --- |
-| `npm run start` | Levanta el dev server de Expo |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run lint` | ESLint |
-| `npm test` | Corre los tests una vez |
-| `npm run test:watch` | Tests en modo watch |
+| Comando              | Qué hace                      |
+| -------------------- | ----------------------------- |
+| `npm run start`      | Levanta el dev server de Expo |
+| `npm run typecheck`  | `tsc --noEmit`                |
+| `npm run lint`       | ESLint                        |
+| `npm test`           | Corre los tests una vez       |
+| `npm run test:watch` | Tests en modo watch           |
 
 ## Tests
 
 47 tests unitarios con `jest-expo` y `@testing-library/react-native`:
 
-| Archivo | Qué cubre |
-| --- | --- |
-| `__tests__/lib/dates-test.ts` | Cálculo de días restantes, etiquetas de vencimiento, cambio de mes/año, años bisiestos |
-| `__tests__/lib/money-test.ts` | Formato de pesos y parseo del monto que escribe el usuario |
-| `__tests__/features/bills-reducer-test.ts` | Reducer de la lista y avance de fecha al pagar |
-| `__tests__/components/BillCard-test.tsx` | Render de la tarjeta y su estado *Pagado* |
+| Archivo                                    | Qué cubre                                                                              |
+| ------------------------------------------ | -------------------------------------------------------------------------------------- |
+| `__tests__/lib/dates-test.ts`              | Cálculo de días restantes, etiquetas de vencimiento, cambio de mes/año, años bisiestos |
+| `__tests__/lib/money-test.ts`              | Formato de pesos y parseo del monto que escribe el usuario                             |
+| `__tests__/features/bills-reducer-test.ts` | Reducer de la lista y avance de fecha al pagar                                         |
+| `__tests__/components/BillCard-test.tsx`   | Render de la tarjeta y su estado _Pagado_                                              |
 
 ## Estructura
 
@@ -125,6 +125,10 @@ src/
 ├── db/                   # Esquema, conexión, repositorio, ajustes
 └── lib/                  # dates, money, reducer (lógica pura y testeable)
 ```
+
+## Intgrantes
+
+Luciano Agustin Cunningham Martinez
 
 La lógica de negocio vive en `src/lib/` y `src/db/` como funciones puras,
 separada de las pantallas: por eso se puede testear sin montar componentes.
