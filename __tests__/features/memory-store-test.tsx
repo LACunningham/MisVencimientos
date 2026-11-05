@@ -9,7 +9,14 @@ import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { BillForm } from '@/components/BillForm';
 import { ThemeProvider } from '@/context/theme';
 import { createSeedBills } from '@/data/seed';
-import { insertBill, listBills, resetMemoryStore, updateBill } from '@/db/repository';
+import {
+  insertBill,
+  insertPayment,
+  listAllPayments,
+  listBills,
+  resetMemoryStore,
+  updateBill,
+} from '@/db/repository';
 import type { Bill } from '@/types';
 
 // El backend nativo no existe en el runner: forzamos el de memoria.
@@ -82,6 +89,7 @@ describe('backend en memoria', () => {
   });
 
   it('updateBill no muta el array anterior en el lugar', () => {
+    insertBill(bill());
     const referenciaPrevia = listBills();
     const objetivo = referenciaPrevia[0];
 
@@ -95,6 +103,23 @@ describe('backend en memoria', () => {
   it('los seeds no se duplican entre llamadas', () => {
     const ids = createSeedBills().map((item) => item.id);
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('listAllPayments devuelve todos los pagos, del más reciente al más viejo', () => {
+    insertPayment({ id: 'p1', billId: 'b1', monto: 100, fecha: '2026-01-01', createdAt: 1 });
+    insertPayment({ id: 'p2', billId: 'b2', monto: 200, fecha: '2026-03-01', createdAt: 2 });
+    insertPayment({ id: 'p3', billId: 'b1', monto: 300, fecha: '2026-02-01', createdAt: 3 });
+
+    expect(listAllPayments().map((payment) => payment.id)).toEqual(['p2', 'p3', 'p1']);
+  });
+
+  it('listAllPayments no devuelve el array interno por referencia', () => {
+    insertPayment({ id: 'p1', billId: 'b1', monto: 100, fecha: '2026-01-01', createdAt: 1 });
+
+    const primera = listAllPayments();
+    primera.push({ id: 'intruso', billId: 'b1', monto: 0, fecha: '2026-01-01', createdAt: 0 });
+
+    expect(listAllPayments().some((payment) => payment.id === 'intruso')).toBe(false);
   });
 });
 

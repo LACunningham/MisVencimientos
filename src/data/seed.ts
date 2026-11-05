@@ -2,7 +2,7 @@ import { findCatalogItem } from '@/data/catalog';
 import { addDays, toIso } from '@/lib/dates';
 import type { Bill } from '@/types';
 
-interface SeedSpec {
+export interface SeedSpec {
   catalogId: string;
   monto: number;
   /** Días respecto de hoy: negativo = ya venció. */
@@ -11,7 +11,7 @@ interface SeedSpec {
 
 // Nombre, categoría, color, ícono y tipo de suscripción salen del catálogo, así
 // que no pueden quedar desincronizados con él.
-const SEED_SPECS: SeedSpec[] = [
+export const DEFAULT_SEED_SPECS: SeedSpec[] = [
   {
     catalogId: 'epec',
     monto: 25_000,
@@ -48,10 +48,13 @@ const SEED_SPECS: SeedSpec[] = [
  * Datos de ejemplo. Las fechas son relativas a hoy para que la demo siempre
  * muestre un panorama realista (vencida, hoy, próxima y lejana).
  */
-export function createSeedBills(referencia: Date = new Date()): Bill[] {
+export function createSeedBills(
+  referencia: Date = new Date(),
+  specs: SeedSpec[] = DEFAULT_SEED_SPECS,
+): Bill[] {
   const createdAt = referencia.getTime();
 
-  return SEED_SPECS.flatMap((spec) => {
+  return specs.flatMap((spec) => {
     const item = findCatalogItem(spec.catalogId);
 
     // Si el catálogo dejara de tener el id, se omite en vez de crear una carga

@@ -77,14 +77,15 @@ function toPayment(row: PaymentRow): Payment {
 
 /**
  * En memoria mantenemos una copia para cuando `expo-sqlite` no está disponible
- * (web). Se inicializa con los datos de ejemplo para no mostrar una app vacía.
+ * (web). Arranca vacía: el store decide si sembrar con el fetch o con los seeds
+ * locales, igual que en nativo.
  */
 let memoryBills: Bill[] | null = null;
 let memoryPayments: Payment[] = [];
 
 function getMemoryBills(): Bill[] {
   if (memoryBills === null) {
-    memoryBills = createSeedBills();
+    memoryBills = [];
   }
 
   return memoryBills;
@@ -115,12 +116,29 @@ export function listPayments(billId: string): Payment[] {
   if (!db) {
     return memoryPayments
       .filter((payment) => payment.billId === billId)
-      .sort((a, b) => b.fecha.localeCompare(a.fecha));
+      .sort((a, b) => b.fecha.localeCompare(a.fecha) || b.createdAt - a.createdAt);
   }
 
   const rows = db.getAllSync<PaymentRow>(
     `SELECT * FROM payments WHERE bill_id = ? ORDER BY fecha DESC, created_at DESC;`,
     billId,
+  );
+
+  return rows.map(toPayment);
+}
+
+/** Historial de todas las cargas, del pago más reciente al más viejo. */
+export function listAllPayments(): Payment[] {
+  const db = getDatabase();
+
+  if (!db) {
+    return [...memoryPayments].sort(
+      (a, b) => b.fecha.localeCompare(a.fecha) || b.createdAt - a.createdAt,
+    );
+  }
+
+  const rows = db.getAllSync<PaymentRow>(
+    `SELECT * FROM payments ORDER BY fecha DESC, created_at DESC;`,
   );
 
   return rows.map(toPayment);
@@ -209,9 +227,18 @@ export function insertPayment(payment: Payment): void {
  * si el usuario borra todas las cargas, no vuelvan a aparecer al reiniciar.
  */
 export function seedIfEmpty(): void {
+  if (hasSeeded()) {
+    return;
+  }
+
   const db = getDatabase();
 
-  if (!db || hasSeeded()) {
+  if (!db) {
+    // Web: el backend en memoria también necesita sus datos de arranque.
+    if (getMemoryBills().length === 0) {
+      memoryBills = createSeedBills();
+    }
+    markSeeded();
     return;
   }
 

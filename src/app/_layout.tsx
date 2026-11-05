@@ -1,11 +1,22 @@
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider as RouterThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import { BillsProvider } from '@/context/bills';
 import { ThemeProvider, useAppTheme } from '@/context/theme';
+import { useBillsStore } from '@/store/bills';
 
 SplashScreen.preventAutoHideAsync();
+
+function BillsBootstrap() {
+  const load = useBillsStore((state) => state.load);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  return null;
+}
 
 function RootNavigator() {
   const { isDark } = useAppTheme();
@@ -13,8 +24,9 @@ function RootNavigator() {
   return (
     <RouterThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
       <AnimatedSplashOverlay />
+      <BillsBootstrap />
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
+        <Stack.Screen name="(tabs)" />
         <Stack.Screen name="bill/[id]" options={{ presentation: 'modal' }} />
       </Stack>
     </RouterThemeProvider>
@@ -24,9 +36,7 @@ function RootNavigator() {
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <BillsProvider>
-        <RootNavigator />
-      </BillsProvider>
+      <RootNavigator />
     </ThemeProvider>
   );
 }

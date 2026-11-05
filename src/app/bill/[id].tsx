@@ -10,8 +10,8 @@ import {
 } from '@/components/BillForm';
 import { PaymentHistoryList } from '@/components/PaymentHistoryList';
 import { Brand, Radii, Spacing, ToneColors, Typography } from '@/constants/theme';
-import { useBills } from '@/context/bills';
 import { useAppTheme } from '@/context/theme';
+import { useBillsStore } from '@/store/bills';
 import { confirm } from '@/lib/confirm';
 import { etiquetaVencimiento, formatFecha } from '@/lib/dates';
 import { formatARS } from '@/lib/money';
@@ -21,8 +21,7 @@ type Modo = 'detalle' | 'editar';
 
 export default function BillDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { bills } = useBills();
-  const bill = bills.find((item) => item.id === id);
+  const bill = useBillsStore((state) => state.bills.find((item) => item.id === id));
 
   if (!bill) {
     return <BillNotFound />;
@@ -47,7 +46,10 @@ function BillNotFound() {
 
 function BillDetail({ bill }: { bill: Bill }) {
   const { palette } = useAppTheme();
-  const { updateBill, payBill, deleteBill, getPayments } = useBills();
+  const updateBill = useBillsStore((state) => state.updateBill);
+  const payBill = useBillsStore((state) => state.payBill);
+  const deleteBill = useBillsStore((state) => state.deleteBill);
+  const getPayments = useBillsStore((state) => state.getPayments);
 
   const [modo, setModo] = useState<Modo>('detalle');
 

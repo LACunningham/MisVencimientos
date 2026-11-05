@@ -1,0 +1,8 @@
+[
+  { "catalogId": "epec", "monto": 25000, "offsetDias": -2 },
+  { "catalogId": "fibertel", "monto": 12500, "offsetDias": 2 },
+  { "catalogId": "alquiler", "monto": 180000, "offsetDias": 9 },
+  { "catalogId": "expensas", "monto": 45000, "offsetDias": 1 },
+  { "catalogId": "netflix", "monto": 8000, "offsetDias": 6 },
+  { "catalogId": "spotify", "monto": 5500, "offsetDias": 0 }
+]
