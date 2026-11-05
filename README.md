@@ -149,16 +149,6 @@ npm run ios
 npm run web
 ```
 
-## Scripts
-
-| Comando              | Qué hace                      |
-| -------------------- | ----------------------------- |
-| `npm run start`      | Levanta el dev server de Expo |
-| `npm run typecheck`  | `tsc --noEmit`                |
-| `npm run lint`       | ESLint                        |
-| `npm test`           | Corre los tests una vez       |
-| `npm run test:watch` | Tests en modo watch           |
-
 ## Estructura
 
 ```
